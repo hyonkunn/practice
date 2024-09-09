@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post Example</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<button id="loadPosts">Load Posts</button>
+<div id="postList"></div>
+
+<script>
+  $(document).ready(function () {
+    $('#loadPosts').click(function () {
+      $.ajax({
+        url: '/posts',
+        type: 'GET',
+        success: function (data) {
+          let html = '';
+          data.forEach(function (post) {
+            html += '<p><strong>' + post.title + '</strong>: ' + post.content + '</p>';
+          });
+          $('#postList').html(html);
+        },
+        error: function () {
+          alert('Failed to load posts.');
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
