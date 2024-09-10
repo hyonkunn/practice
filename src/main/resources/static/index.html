@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ユーザー登録</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      // ID 중복 체크
+      $('#checkIdBtn').on('click', function() {
+        const userId = $('#idInput').val();
+
+        $.ajax({
+          url: '/checkId',
+          type: 'GET',
+          data: { id: userId },
+          success: function(response) {
+            $('#idResult').text(response);
+          },
+          error: function() {
+            $('#idResult').text('IDチェック中にエラーが発生しました。');
+          }
+        });
+      });
+
+      // 나이 계산
+      $('#calculateAgeBtn').on('click', function() {
+        const birthday = $('#birthdayInput').val();
+
+        $.ajax({
+          url: '/calculateAge',
+          type: 'GET',
+          data: { birthday: birthday },
+          success: function(response) {
+            $('#ageResult').text('年齢: ' + response.age);
+          },
+          error: function() {
+            $('#ageResult').text('年齢計算中にエラーが発生しました。');
+          }
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+<h1>ユーザー登録</h1>
+<h2>IDチェック</h2>
+<input type="text" id="idInput" placeholder="IDを入力してください">
+<button id="checkIdBtn">IDチェック</button>
+<div id="idResult"></div>
+
+<h2>年齢計算</h2>
+<input type="date" id="birthdayInput">
+<button id="calculateAgeBtn">年齢計算</button>
+<div id="ageResult"></div>
+</body>
+</html>
